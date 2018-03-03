@@ -8,7 +8,7 @@
 // loop through numbers starting from 1000 to the number max.
 // add up four consecutive digits.. in every number given..
 // if the number has more than 4 digits
-    // split the number and add every four.
+    // remove first ele and add every four.
 // sum of the digits has to greater than or equal to max sum.
 // push it into the numbers arr. otherwise keep looping..
 
@@ -28,14 +28,20 @@ var howManyNumbers = (function () {
   }
 
   function fillNumbers(nMax, maxsm) {
-    var sum = 0;
-
     function maxSum(n) {
+      // makes the current number into an array of numbers
      var arr = (n+'').split('').map(d=>parseInt(d));
+     // set the max amount that the number is
      var max = 0;
+
+     // keep looping until the array is smaller than 4
      while(arr.length>=4) {
        var sum=arr[0]+arr[1]+arr[2]+arr[3];
-       if(sum>max) max=sum;
+       // if the current number is greater than the last max set max to current sum
+       if(sum>max) {
+         max = sum;
+       }
+       // remove first element...
        arr.shift();
      }
      return max;
@@ -49,8 +55,6 @@ var howManyNumbers = (function () {
 }
 
   function formatSolution() {
-    console.log(numbers);
-    console.log(numbers);
     var length = numbers.length;
     // find mean
     var mean = numbers.reduce(function (a, b) {
@@ -80,4 +84,4 @@ var howManyNumbers = (function () {
   }
 })();
 
-console.log(howManyNumbers.maxSumDig(2000, 3)); //[147, 13001, 2080631]
+console.log(howManyNumbers.maxSumDig(2000, 3)); 
