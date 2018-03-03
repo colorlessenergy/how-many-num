@@ -29,55 +29,45 @@ var howManyNumbers = (function () {
 
   function fillNumbers(nMax, maxsm) {
     var sum = 0;
-    var iterationIncrease = 0;
-    for (let i = 1000; i <= nMax; i++) {
-      var currentNumber = i.toString().split('');
 
-      if (currentNumber.length > 4) {
-        while (currentNumber.length >= 4) {
-          for (let j = 0; j < 4; j++) {
-            sum += Number(currentNumber[j]);
-          }
-          if (sum <= maxsm) {
-            console.log(currentNumber, sum, maxsm)
+    function maxSum(n) {
+     var arr = (n+'').split('').map(d=>parseInt(d));
+     var max = 0;
+     while(arr.length>=4) {
+       var sum=arr[0]+arr[1]+arr[2]+arr[3];
+       if(sum>max) max=sum;
+       arr.shift();
+     }
+     return max;
+   }
 
-            numbers.push(i);
-          }
-          sum = 0;
-          currentNumber.shift();
-        }
-      } else if (currentNumber.length === 4) {
-        for (let j = 0; j < currentNumber.length; j++) {
-          sum += Number(currentNumber[j]);
-        }
-        if (sum <= maxsm) {
-          numbers.push(i);
-        }
-        sum = 0;
-      }
-    }
-  }
+   for(var i=1000;i<=nMax;i++) {
+     if(maxSum(i)<=maxsm) {
+     numbers.push(i);
+   }
+ }
+}
 
   function formatSolution() {
-
+    console.log(numbers);
+    console.log(numbers);
     var length = numbers.length;
-
     // find mean
     var mean = numbers.reduce(function (a, b) {
-      return a + b;
+      return Math.abs(a) + Math.abs(b);
     }) / numbers.length;
 
     // find number closes to the mean of current numbers.
 
     var closestToMean = numbers.reduce(function(prev, curr) {
-      return (Math.abs(curr - mean) < Math.abs(prev - mean) ? curr : prev);
+      return (Math.abs(Math.abs(curr) - Math.abs(mean)) < Math.abs(Math.abs(prev) - Math.abs(mean)) ? Math.abs(curr) : Math.abs(prev));
     });
 
     // sum of all the numbers
 
     var sumOfNumbers = numbers.reduce(function (a, b) {
-      return a + b;
-    })
+      return Math.abs(a) + Math.abs(b);
+    });
 
     numbers = [];
 
@@ -90,4 +80,4 @@ var howManyNumbers = (function () {
   }
 })();
 
-console.log(howManyNumbers.maxSumDig(76619, 4)); //[147, 13001, 2080631]
+console.log(howManyNumbers.maxSumDig(2000, 3)); //[147, 13001, 2080631]
